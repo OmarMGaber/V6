@@ -10,7 +10,7 @@
 //  Description: 
 //
 
-#include "../../../include/v6_core/loader/loader_interface.h"
+#include "v6_core/loader/loader_interface.h"
 
 namespace v6_core {
 } // v6_core

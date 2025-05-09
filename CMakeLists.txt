@@ -29,3 +29,8 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(spdlog)
 
 target_link_libraries(V6 PRIVATE spdlog::spdlog)
+
+target_include_directories(V6
+        PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+)

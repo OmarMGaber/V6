@@ -10,7 +10,7 @@
 //  Description: 
 //
 
-#include "../../../include/v6_core/loader/logger.h"
+#include "v6_core/loader/logger.h"
 
 std::shared_ptr<spdlog::logger> logger = spdlog::basic_logger_mt("loader", "logs/loader.log");
 

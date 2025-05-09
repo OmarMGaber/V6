@@ -16,7 +16,7 @@
 #include <istream>
 #include <string>
 #include <vector>
-#include "../models/parsed_element.h"
+#include "v6_core/models/parsed_element.h"
 
 namespace v6_core {
 

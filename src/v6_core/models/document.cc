@@ -10,7 +10,7 @@
 //  Description: 
 //
 
-#include "../../../include/v6_core/models/document.h"
+#include "v6_core/models/document.h"
 
 namespace fs = std::filesystem;
 

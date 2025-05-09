@@ -11,8 +11,8 @@
 //
 #include <filesystem>
 #include <iostream>
-#include "../../../include/v6_core/loader/file_system_loader.h"
-#include "../../../include/v6_core/loader/logger.h"
+#include "v6_core/loader/file_system_loader.h"
+#include "v6_core/loader/logger.h"
 
 namespace v6_core {
 

@@ -10,7 +10,7 @@
 //  Description: 
 //
 
-#include "../../../include/v6_core/parser/text_parser.h"
+#include "v6_core/parser/text_parser.h"
 
 namespace v6_core {
 TextParser::TextParser(std::istream &in_stream) : ParserInterface(in_stream) {}

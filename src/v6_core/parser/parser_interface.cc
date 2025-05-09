@@ -10,7 +10,7 @@
 //  Description: 
 //
 
-#include "../../../include/v6_core/parser/parser_interface.h"
+#include "v6_core/parser/parser_interface.h"
 
 namespace v6_core {
 ParserInterface::ParserInterface(std::istream &in_stream) : in_stream_(in_stream) {}
