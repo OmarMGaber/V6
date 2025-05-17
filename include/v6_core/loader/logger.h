@@ -7,11 +7,11 @@
 //  File: logger
 //  Project: V6
 //  Created by Omar on 07/05/2025.
-//  Description: 
+//  Description: Debug logger for the loader package.
 //
 
-#ifndef V6_INCLUDE_V6_CORE_LOADER_LOGGER_H_
-#define V6_INCLUDE_V6_CORE_LOADER_LOGGER_H_
+#ifndef V6_CORE_LOADER_LOGGER_H_
+#define V6_CORE_LOADER_LOGGER_H_
 
 #include <memory>
 #include <spdlog/spdlog.h>
@@ -20,4 +20,4 @@
 std::shared_ptr<spdlog::logger>& GetLogger();
 
 
-#endif //V6_INCLUDE_V6_CORE_LOADER_LOGGER_H_
+#endif //V6_CORE_LOADER_LOGGER_H_

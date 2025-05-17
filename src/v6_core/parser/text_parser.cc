@@ -7,7 +7,7 @@
 //  File: TextParser
 //  Project: V6
 //  Created by Omar on 07/05/2025.
-//  Description: 
+//  Description: Parser definition for text files.
 //
 
 #include "v6_core/parser/text_parser.h"
@@ -15,21 +15,26 @@
 namespace v6_core {
 TextParser::TextParser(std::istream &in_stream) : ParserInterface(in_stream) {}
 
-std::vector<v6_core::ParsedElement> TextParser::Parse() {
-  std::vector<v6_core::ParsedElement> elements;
+std::vector<std::string> TextParser::ParseNext() {
   std::string line;
-  int64_t line_number = 0;
+  std::getline(in_stream_, line);
 
-  while (std::getline(in_stream_, line)) {
-    if (!line.empty()) {
-      elements.emplace_back(line, 1, line_number++);
+  std::vector<std::string> tokens;
+  std::istringstream iss(line);
+  std::string token;
+  while (iss >> token) {
+//    v6_core::ProcessTerm(token);
+    if (token.empty()) {
+      continue;
     }
+    tokens.push_back(token);
   }
 
-  elements.shrink_to_fit();
-  return elements;
+  return tokens;
 }
 
-
+bool TextParser::HasNext() {
+  return !in_stream_.eof();
+}
 
 } // v6_core

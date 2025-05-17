@@ -7,13 +7,15 @@
 //  File: TextParser
 //  Project: V6
 //  Created by Omar on 07/05/2025.
-//  Description: 
+//  Description: Parser definition for text files.
 //
 
-#ifndef V6_SRC_V6_CORE_PARSER_TEXT_PARSER_H_
-#define V6_SRC_V6_CORE_PARSER_TEXT_PARSER_H_
+#ifndef V6_CORE_PARSER_TEXT_PARSER_H_
+#define V6_CORE_PARSER_TEXT_PARSER_H_
 
 #include "parser_interface.h"
+#include <sstream>
+#include "v6_core/linguistics/term_processor.h"
 
 namespace v6_core {
 
@@ -21,13 +23,11 @@ class TextParser : public v6_core::ParserInterface {
  public:
     explicit TextParser(std::istream &in_stream);
 
-    std::vector<v6_core::ParsedElement> Parse() override;
+    std::vector<std::string> ParseNext() override;
 
-    v6_core::ParsedElement ParseNext() override;
-
-    bool hasNext() override;
+    bool HasNext() override;
 };
 
 }
 
-#endif //V6_SRC_V6_CORE_PARSER_TEXT_PARSER_H_
+#endif //V6_CORE_PARSER_TEXT_PARSER_H_

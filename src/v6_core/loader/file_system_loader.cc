@@ -7,10 +7,9 @@
 //  File: FileSystemLoader
 //  Project: V6
 //  Created by Omar on 06/05/2025.
-//  Description:
+//  Description:  FileSystemLoader is a LoaderInterface implementation for loading files from the local file system.
 //
-#include <filesystem>
-#include <iostream>
+
 #include "v6_core/loader/file_system_loader.h"
 #include "v6_core/loader/logger.h"
 
@@ -18,49 +17,64 @@ namespace v6_core {
 
 auto logger = GetLogger();
 
-FileSystemLoader::FileSystemLoader(std::string path)
-    : path_(std::move(path)) {}
-
-std::vector<std::istream *> FileSystemLoader::Load() {
+FileSystemLoader::FileSystemLoader(const std::string &path) : path_(std::filesystem::absolute(path)) {
   namespace fs = std::filesystem;
 
-  std::vector<std::istream *> streams;
-
-  fs::path abs_path = fs::absolute(path_);
-  logger->info("Loading files from path: {}", abs_path.string());
-
-  if (fs::is_regular_file(abs_path)) {
-    auto *stream = new std::ifstream(abs_path);
-    if (!stream->is_open()) {
-      delete stream;
-      logger->error("Failed to open file: {}", abs_path.string());
-      throw std::runtime_error("Failed to open file: " + abs_path.string());
-    }
-    streams.push_back(stream);
-  } else if (fs::is_directory(abs_path)) {
-    for (const auto &entry : fs::directory_iterator(abs_path)) {
-      if (entry.is_regular_file()) {
-        auto *stream = new std::ifstream(entry.path());
-        if (!stream->is_open()) {
-          delete stream;
-            logger->error("Failed to open file: {}", entry.path().string());
-          throw std::runtime_error("Failed to open file: " + entry.path().string());
-        }
-        streams.push_back(stream);
-      }
-    }
-  } else {
-    logger->error("Invalid path: {}", abs_path.string());
-    throw std::runtime_error("Invalid path: " + abs_path.string());
+  if (path_.empty()) {
+    logger->error("Path is empty");
+    throw std::invalid_argument("Path is empty");
   }
 
-  if (streams.empty()) {
-    logger->error("No files found in path: {}", abs_path.string());
-    throw std::runtime_error("No files found in path: " + abs_path.string());
+  if (!fs::is_regular_file(path_) && !fs::is_directory(path_)) {
+    logger->error("Path is not a file or directory: {}", path);
+    throw std::invalid_argument("Path is not a file or directory");
   }
 
-    logger->info("Loaded {} files from path: {}", streams.size(), abs_path.string());
-  return streams;
+  if (!fs::exists(path_)) {
+    logger->error("Path does not exist: {}", path);
+    throw std::invalid_argument("Path does not exist");
+  }
+
+  try {
+    this->InitializeQueues(path_);
+  } catch (const std::exception &e) {
+    logger->error("Failed to initialize files queue: {}", e.what());
+    throw;
+  }
 }
 
+bool FileSystemLoader::HasNext() const {
+  return !this->files_.empty();
+}
+
+v6_core::FileRAII FileSystemLoader::NextFile() {
+  if (!this->HasNext()) {
+//    logger->error("No more files to load");
+    throw std::out_of_range("No more files to load");
+  }
+
+  auto path = this->files_.front();
+  this->files_.pop();
+
+  return v6_core::FileRAII(path);
+}
+
+void FileSystemLoader::InitializeQueues(const std::filesystem::path &path) {
+  namespace fs = std::filesystem;
+  if (fs::is_regular_file(path)) {
+    this->files_.push(path);
+    return;
+  }
+
+  // TODO: Make it a buffered queue with a limit, and load the rest files with lazy propagation
+  for (const auto &entry : fs::directory_iterator(path)) {
+    if (fs::is_regular_file(entry.path())) {
+      this->files_.push(entry.path());
+    } else if (fs::is_directory(entry.path())) {
+      this->InitializeQueues(entry.path());
+    }
+  }
+
 }  // namespace v6_core
+
+}

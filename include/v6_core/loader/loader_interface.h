@@ -12,8 +12,8 @@
 #ifndef V6_CORE_LOADER_INTERFACE_H_
 #define V6_CORE_LOADER_INTERFACE_H_
 
-#include <ostream>
-#include <vector>
+#include <memory>
+#include "v6_core/loader/file_raii.h"
 
 namespace v6_core {
 
@@ -21,9 +21,9 @@ namespace v6_core {
 class LoaderInterface {
  public:
   virtual ~LoaderInterface() = default;
+  [[nodiscard]] virtual bool HasNext() const = 0;
 
-    // Loads data and returns an input stream.
-    virtual std::vector<std::istream*> Load() = 0;
+  [[nodiscard]] virtual v6_core::FileRAII NextFile() = 0;
 };
 
 }  // namespace v6_core

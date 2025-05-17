@@ -7,7 +7,7 @@
 //  File: logger
 //  Project: V6
 //  Created by Omar on 07/05/2025.
-//  Description: 
+//  Description: Debug logger for the loader package.
 //
 
 #include "v6_core/loader/logger.h"

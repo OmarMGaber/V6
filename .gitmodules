@@ -1,0 +1,6 @@
+[submodule "third_party/eigen"]
+	path = third_party/eigen
+	url = https://gitlab.com/libeigen/eigen.git
+[submodule "third_party/snowball"]
+	path = third_party/snowball
+	url = https://github.com/snowballstem/snowball.git

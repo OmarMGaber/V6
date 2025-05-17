@@ -7,16 +7,15 @@
 //  File: ParserInterface
 //  Project: V6
 //  Created by Omar on 07/05/2025.
-//  Description: 
+//  Description: Parsers interface definition.
 //
 
-#ifndef V6_SRC_V6_CORE_PARSER_PARSER_INTERFACE_H_
-#define V6_SRC_V6_CORE_PARSER_PARSER_INTERFACE_H_
+#ifndef V6_CORE_PARSER_PARSER_INTERFACE_H_
+#define V6_CORE_PARSER_PARSER_INTERFACE_H_
 
 #include <istream>
 #include <string>
 #include <vector>
-#include "v6_core/models/parsed_element.h"
 
 namespace v6_core {
 
@@ -28,11 +27,10 @@ class ParserInterface {
 
   virtual ~ParserInterface() = default;
 
-  virtual std::vector<v6_core::ParsedElement> Parse() = 0;
-  virtual v6_core::ParsedElement ParseNext() = 0;
-  virtual bool hasNext() = 0;
+  virtual std::vector<std::string> ParseNext() = 0;
+  virtual bool HasNext() = 0;
 };
 
 } // v6_core
 
-#endif //V6_SRC_V6_CORE_PARSER_PARSER_INTERFACE_H_
+#endif //V6_CORE_PARSER_PARSER_INTERFACE_H_
