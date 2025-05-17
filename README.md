@@ -3,9 +3,9 @@
 ## Overview
 V6 is a text search engine that uses the classical vector space model to search for a query in a collection of documents (corpus).
 V6 contains 3 main components:
-1. **V6 Core**: The core library that implements all needed components and data structures to build the search engine.
-2. **V6 Server**: The server that provides the engine through a REST API.
-3. **V6 Client**: The client that provides a read-evaluate-print loop (REPL) interface to interact with the server.
+1. **V6 Core**: The core library that implements all needed components and data structures to build the search engine. (Has alot to be added)
+2. **V6 Server**: The server that provides the engine through a REST API. (Not Implemented yet.)
+3. **V6 Client**: The client that provides a read-evaluate-print loop (REPL) interface to interact with the server. (Not Implemented yet.)
 
 ## Installation Requirements 
 
@@ -45,3 +45,6 @@ This project is released under the Apache License 2.0
 
 ## Code Style
 This project follows the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
+
+## Note
+The project is still in its early stages and is considered a toy project.
