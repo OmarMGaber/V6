@@ -21,28 +21,22 @@ std::string Tokenizer::NextToken() {
     throw std::out_of_range("No more tokens available");
   }
 
-  std::string token;
-
-  while (pos_ < str_size_ && delimiters_.contains(str_[pos_])) {
-    ++pos_;
+  size_t end = pos_;
+  while (end < str_size_ && !delimiters_.contains(str_[end])) {
+    ++end; // instead of shrink_to_fit
   }
 
-  while (pos_ < str_size_ && !delimiters_.contains(str_[pos_])) {
-    token += str_[pos_++];
-  }
+  std::string token = str_.substr(pos_, end - pos_);
+  pos_ = end;
 
-  while (pos_ < str_size_ && delimiters_.contains(str_[pos_])) {
-    ++pos_;
-  }
-
-  token.shrink_to_fit();
-
+  this->adjustPos();
   return token;
 }
 
 std::vector<std::string> Tokenizer::Tokenize(const std::string &text) {
   std::vector<std::string> tokens;
 
+  this->Reset(text);
   while (this->HasNext()) {
     tokens.push_back(this->NextToken());
   }
@@ -58,6 +52,13 @@ void Tokenizer::Reset(std::string text) {
   str_ = std::move(text);
   str_size_ = str_.size();
   pos_ = 0;
+
+  adjustPos();
+}
+void Tokenizer::adjustPos() {
+  while (pos_ < str_size_ && delimiters_.contains(str_[pos_])) {
+    ++pos_;
+  }
 }
 
 } // v6_core

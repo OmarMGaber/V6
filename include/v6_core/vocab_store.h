@@ -18,6 +18,7 @@
 #include <string>
 #include <unordered_map>
 #include <cstdint>
+#include "v6_core/models/types.h"
 
 namespace v6_core {
 
@@ -28,7 +29,7 @@ class VocabStore {
     VocabStore() = default;
 
     bool Put(const std::string &term);
-    size_t Get(const std::string &term) const;
+    TermId Get(const std::string &term) const;
 };
 
 } // v6_core

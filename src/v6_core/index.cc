@@ -48,18 +48,20 @@ void Index::AddDocuments(LoaderInterface &loader) {
 v6_core::QueryResult Index::Query(const std::string &query) {
   v6_core::Document query_doc(0, "");
 
-  std::istringstream iss(query);
-  std::string word;
   std::unordered_map<int, double> query_tfidf;
   std::vector<TermId> tokens;
+  auto stream = std::istringstream(query);
+  TextParser par(stream);
 
-  while (iss >> word) {
-    int term_id = store_.Get(word);
-    if (term_id == -1) {
-      continue;
+  while (par.HasNext()) {
+    for (const auto &word : par.ParseNext()) {
+      TermId term_id = store_.Get(word);
+      if (term_id == -1) {
+        continue;
+      }
+      tokens.push_back(term_id);
+      query_doc.AddTerm(term_id, 1);
     }
-    tokens.push_back(term_id);
-    query_doc.AddTerm(term_id, 1);
   }
 
   // Keep them here for now to test

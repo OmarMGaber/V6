@@ -20,13 +20,17 @@ std::vector<std::string> TextParser::ParseNext() {
   std::getline(in_stream_, line);
 
   std::vector<std::string> tokens;
-  std::istringstream iss(line);
   std::string token;
-  while (iss >> token) {
+
+  this->tokenizer_.Reset(line);
+
+  while (this->tokenizer_.HasNext()) {
 //    v6_core::ProcessTerm(token);
+    token = this->tokenizer_.NextToken();
     if (token.empty()) {
       continue;
     }
+
     tokens.push_back(token);
   }
 

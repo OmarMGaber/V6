@@ -16,15 +16,16 @@
 #include <istream>
 #include <string>
 #include <vector>
+#include "v6_core/tokenizer.h"
 
 namespace v6_core {
 
 class ParserInterface {
  protected:
   std::istream &in_stream_;
+  v6_core::Tokenizer tokenizer_;
  public:
   explicit ParserInterface(std::istream &in_stream);
-
   virtual ~ParserInterface() = default;
 
   virtual std::vector<std::string> ParseNext() = 0;

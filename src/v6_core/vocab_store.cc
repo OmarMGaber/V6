@@ -25,7 +25,7 @@ bool VocabStore::Put(const std::string &term) {
   return true;
 }
 
-size_t VocabStore::Get(const std::string &term) const {
+v6_core::TermId VocabStore::Get(const std::string &term) const {
   auto it = vocab_.find(term);
   if (it != vocab_.end()) {
     return it->second;
