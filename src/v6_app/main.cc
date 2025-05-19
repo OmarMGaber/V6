@@ -8,7 +8,7 @@ using namespace std;
 int main(void) {
   cout << "Starting the index..." << "\n";
 
-  v6_core::FileSystemLoader loader("dataset");
+  v6_core::FileSystemLoader loader("corpus");
   v6_core::VocabStore store;
 
   v6_core::Index index(store);
